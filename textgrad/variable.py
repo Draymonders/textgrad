@@ -13,7 +13,7 @@ class Variable:
         self,
         value: Union[str, bytes] = "",
         image_path: str = "",
-        predecessors: List['Variable']=None,
+        predecessors: List['Variable']=None, # 前置数据
         requires_grad: bool=True,
         *,
         role_description: str):

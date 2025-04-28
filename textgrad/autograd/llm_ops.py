@@ -56,9 +56,13 @@ class LLMCall(Function):
         # TODO: Should we allow default roles? It will make things less performant.
         system_prompt_value = self.system_prompt.value if self.system_prompt else None
 
+        print(f"=== LLMCall function forward start ===")
+        print("system_prompt:", system_prompt_value)
+        print("user_input:", input_variable.value)
         # Make the LLM Call
         response_text = self.engine(input_variable.value, system_prompt=system_prompt_value)
-
+        print("response:", response_text)
+        print("=== LLMCall function forward end ===")
         # Create the response variable
         response = Variable(
             value=response_text,
@@ -168,6 +172,7 @@ class LLMCall(Function):
         backward_prompt = CONVERSATION_START_INSTRUCTION_BASE.format(conversation=conversation, **backward_info)
         backward_prompt += OBJECTIVE_INSTRUCTION_BASE.format(**backward_info)
         backward_prompt += EVALUATE_VARIABLE_INSTRUCTION.format(**backward_info)
+        print(backward_prompt)
         return backward_prompt
 
     @staticmethod
@@ -207,7 +212,11 @@ class LLMCall(Function):
             backward_prompt = LLMCall._construct_llm_base_backward_prompt(backward_info)
             
             logger.info(f"_backward_through_llm prompt", extra={"_backward_through_llm": backward_prompt})
+            print("=== backward start ===")
+            print("user_input", backward_prompt)
             gradient_value = backward_engine(backward_prompt, system_prompt=BACKWARD_SYSTEM_PROMPT)
+            print("resp", gradient_value)
+            print("=== backward start ===")
             logger.info(f"_backward_through_llm gradient", extra={"_backward_through_llm": gradient_value})
 
             conversation = CONVERSATION_TEMPLATE.format(**backward_info)

@@ -173,9 +173,16 @@ class TextualGradientDescent(Optimizer):
         Returns:
             None
         """
+        # print("=== step start ===")
         for parameter in self.parameters:
             prompt_update_parameter = self._update_prompt(parameter)
+            print("=== prompt_update_parameter start ===")
+            print(prompt_update_parameter)
+            print("=== prompt_update_parameter end ===")
             new_text = self.engine(prompt_update_parameter, system_prompt=self.optimizer_system_prompt)
+            print("=== new_text start ===")
+            print(new_text)
+            print("=== new_text end ===")
             logger.info(f"TextualGradientDescent optimizer response", extra={"optimizer.response": new_text})
             try:
                 new_value = new_text.split(self.new_variable_tags[0])[1].split(self.new_variable_tags[1])[0].strip()
@@ -191,7 +198,7 @@ class TextualGradientDescent(Optimizer):
             
             if self.do_gradient_memory:
                 self.update_gradient_memory(parameter)
-
+        # print("=== step end ===")
 
 class TextualGradientDescentwithMomentum(Optimizer):
     def __init__(self, 

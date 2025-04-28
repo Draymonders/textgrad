@@ -20,7 +20,7 @@ sh = logging.FileHandler(log_file)
 sh.setFormatter(cf)
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 logger.addHandler(sh)
 
 from .variable import Variable

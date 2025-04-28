@@ -1,5 +1,5 @@
 from .base import EngineLM, CachedEngine
-from textgrad.engine_experimental.litellm import LiteLLMEngine
+# from textgrad.engine_experimental.litellm import LiteLLMEngine
 
 __ENGINE_NAME_SHORTCUTS__ = {
     "opus": "claude-3-opus-20240229",

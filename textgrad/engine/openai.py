@@ -60,7 +60,12 @@ class ChatOpenAI(EngineLM, CachedEngine):
                 api_key="ollama"
             )
         else:
-            raise ValueError("Invalid base URL provided. Please use the default OLLAMA base URL or None.")
+            self.client = OpenAI(
+                api_key=os.getenv("OPENAI_API_KEY"),
+                base_url=base_url
+            )
+        # else :
+        #     raise ValueError("Invalid base URL provided. Please use the default OLLAMA base URL or None.")
 
         self.model_string = model_string
         self.is_multimodal = is_multimodal
